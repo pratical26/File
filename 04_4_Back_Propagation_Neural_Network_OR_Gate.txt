@@ -1,0 +1,94 @@
+4. Back Propagation Neural Network – OR Gate
+
+Program:
+
+import numpy as np 
+X = np.array (([0,0],[0,1],[1,0],[1,1]),dtype=float) 
+Y = np.array (([0],[1],[1],[1]),dtype=float) 
+print('value X->',X) 
+print('value Y->',y) 
+print('xrow,xcolm->',X.shape) 
+print('yrow,ycolm->',y.shape) 
+ 
+class NeuralNetwork(object): 
+def  init (self): 
+self.inputsize=2 
+self.outputsize=1 
+self.hidden=2 
+ 
+self.w1 = np.array([[0.6, -0.3], [-0.1, 0.4]]) # Input to hidden layer 
+self.b1 = np.array([[0.3, 0.5]]) # Bias for hidden layer (1x2) 
+self.w2 = np.array([[0.4], [0.1]])  # Hidden to output layer (2x1) 
+self.b2 = np.array([[-0.2]]) # Bias for output layer (1x1) 
+self.lr=np.array([[0.25]]) 
+ 
+def forward(self,X): 
+self.z=np.dot(X,self.w1) +self.b1 
+print('value of Z ->\n',self.z) 
+print(' ') 
+self.z2=self.sigmoid(self.z) 
+print('value of z2 -> \n',self.z2) 
+print(' ') 
+self.z3=np.dot(self.z2,self.w2) +self.b2 
+print('value of z3 ->\n',self.z3) 
+print(' ') 
+o=self.sigmoid(self.z3) 
+print('value of O\n',o) 
+print("-----FORWARD OVER ----- ") 
+print(' \n\n') 
+return o 
+
+===== PDF PAGE 20 =====
+13 
+ 
+ 
+ 
+def sigmoid(self,s): 
+return 1/(1+np.exp(-s)) 
+ 
+def sigmoidprime(self,s): 
+return s*(1-s) 
+ 
+def backward(self,X,y,o): 
+self.o_error = y-o #ERROR CALCULATION  
+print('value of o_error->\n',self.o_error) 
+print(' ') 
+ 
+self.o_delta=self.o_error*self.sigmoidprime(o) #ERROR X DERIVATIVE 
+print('value of o_delta->\n',self.o_delta) 
+print(' ') 
+ 
+self.z2_error=self.o_delta.dot(self.w2.T) # 
+print('value of z2_error->\n',self.z2_error) 
+print(' ') 
+ 
+self.z2_delta=self.z2_error*self.sigmoidprime(self.z2) 
+print('value of z2_delta->\n',self.z2_delta) 
+print(' ') 
+ 
+self.w1+=X.T.dot(self.z2_delta) * 0.25 
+print('Value for w1 after updation->\n',self.w1) 
+print(' ') 
+ 
+self.w2+=self.z2.T.dot(self.o_delta)*0.25 
+print('Value for w2 after updation->\n',self.w2) 
+print(' ') 
+def train(self,X,y): 
+o=self.forward(X) 
+self.backward(X,y,o) 
+nn=NeuralNetwork() 
+ 
+nn.train(X,y) 
+ 
+print("input:\n"+str(X)) 
+print(' ') 
+print("Actual output:"+str(y)) 
+print(' ') 
+print("loss:\n"+str(np.mean(np.square(y-nn.forward(X))))) 
+print(' ') 
+print("\n") 
+
+===== PDF PAGE 21 =====
+14
+
+===========================================================================

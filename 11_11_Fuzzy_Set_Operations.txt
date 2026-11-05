@@ -1,0 +1,33 @@
+11. Fuzzy Set Operations
+
+Program:
+
+ 
+ import numpy as np 
+ 
+ # Input fuzzy sets 
+ a = np.array(list(map(float, input("Enter fuzzy set A (space-separated): ").split()))) 
+ b = np.array(list(map(float, input("Enter fuzzy set B (space-separated): ").split()))) 
+ 
+               #Algebraic operations 
+ asum = a + b - a * b             # Algebraic sum 
+ adiff = a + (1 - b)              # Algebraic difference 
+ aprod = a * b                    # Algebraic product 
+ bsum = np.minimum(1, a + b)      # Bounded sum 
+ bdiff = np.maximum(0, a - b)     # Bounded difference 
+ bprod = np.maximum(0, a + b - 1) # Bounded product
+
+===== PDF PAGE 42 =====
+35 
+ 
+ 
+ 
+# Display results 
+print("The algebraic sum:", asum) 
+print("The algebraic difference:", adiff) 
+print("The algebraic product:", aprod) 
+print("The bounded sum:", bsum) 
+print("The bounded difference:", bdiff) 
+print("The bounded product:", bprod)
+
+===========================================================================

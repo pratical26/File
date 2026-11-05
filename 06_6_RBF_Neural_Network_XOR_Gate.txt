@@ -1,0 +1,63 @@
+6. RBF Neural Network – XOR Gate
+
+Program:
+
+import numpy as np 
+import pandas as pd 
+from sklearn.cluster import KMeans 
+from scipy.spatial.distance import cdist 
+ 
+# Data 
+X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]]) 
+y = np.array([0, 1, 1, 0]) 
+weight = np.array([-1, 1, 1, -1]) 
+ 
+ 
+# Use X as centers (no clustering in this case) 
+centers = np.copy(X) 
+print("Centers:\n", centers) 
+ 
+ 
+# Standard deviation 
+std_dev = 1 
+ 
+# RBF activation function 
+def rbf_activation(X, centers, std_dev): 
+return np.around(np.exp(-cdist(X, centers, 'sqeuclidean') / (2 * std_dev**2)), decimals=1) 
+ 
+ 
+# Calculate RBF activations 
+rbf_x = rbf_activation(X, centers, std_dev) 
+
+===== PDF PAGE 28 =====
+21 
+ 
+ 
+ 
+# Prediction function 
+def pred(): 
+return np.dot(rbf_x, weight) 
+ 
+ 
+# Binary step function 
+def step_fun(s): 
+return 1 if s > 0 else 0 
+ 
+ 
+# Calculate predictions 
+pred_values = pred() 
+step_predictions = np.array([step_fun(val) for val in pred_values]) 
+ 
+ 
+# Create DataFrame 
+df = pd.DataFrame({ 
+'Input': list(map(tuple, X)), 
+'RBF Activation': list(map(tuple, rbf_x)), 
+'Predicted Value': pred_values, 
+'Predicted Output': step_predictions 
+}) 
+ 
+ 
+print("\nDataFrame:\n", df)
+
+===========================================================================
